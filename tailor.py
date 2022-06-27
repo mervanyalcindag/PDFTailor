@@ -1,4 +1,3 @@
-from logging import exception
 import tkinter as tk
 from tkinter import filedialog as fd
 from tkinter import messagebox as msg
