@@ -8,6 +8,9 @@ class App(tk.Tk):
   def __init__(self):
     super().__init__()
 
+    self.text_clockwise = tk.StringVar()
+    self.text_counterclockwise = tk.StringVar()
+
     self.geometry('400x600+500+100')
     
     self.title('PDF Birleştirici')
@@ -26,6 +29,8 @@ class App(tk.Tk):
   def create_widgets(self):
     self.button_inputs = tk.Button(self, text='Dosya yükle', height=3, command=self.button_inputs_handler)
     self.listbox = tk.Listbox(self, bg='white', font=("Courier", 16, "italic"))
+    self.entry_clockwise_value = tk.Entry(self, textvariable=self.text_clockwise)
+    self.button_rotate_clockwise = tk.Button(self, text='Clockwise', width=5, command=self.button_rotate_clockwise_handler)
     self.button_up = tk.Button(self, text='Yukarı', width=5, command=self.button_up_click_handler)
     self.button_down = tk.Button(self, text='Aşağı', width=5, command=self.button_down_click_handler)
     self.button_delete = tk.Button(self, text='Sil', width=5, command=self.button_delete_click_handler)
@@ -33,11 +38,14 @@ class App(tk.Tk):
     
     self.button_inputs.grid(row=0, column=0, columnspan=2, sticky=tk.NSEW, padx=8, pady=8)
     self.listbox.grid(row=1, column=0, rowspan=3, sticky=tk.NSEW, padx=8, pady=8)
-    self.button_up.grid(row=1, column=1, sticky=tk.S, padx=8, pady=8)
-    self.button_down.grid(row=2, column=1, sticky=tk.N, padx=8, pady=8)
+    self.button_rotate_clockwise.grid(row=1, column=2, sticky=tk.E, padx=8, pady=8)
+    self.button_up.grid(row=1, column=1, columnspan=2, sticky=tk.S, padx=8, pady=8)
+    self.button_down.grid(row=2, column=1, columnspan=2, sticky=tk.N, padx=8, pady=8)
     self.button_delete.grid(row=3, column=1, sticky=tk.S, padx=8, pady=8)
     self.button_merge.grid(row=4, column=0, columnspan=2, sticky=tk.NSEW, padx=8, pady=8)
 
+  def button_rotate_clockwise_handler(self):
+    print('clockwise')
 
   def button_delete_click_handler(self):
     if len(self.listbox.curselection()) == 0:
@@ -94,7 +102,8 @@ class App(tk.Tk):
     merge_file = PyPDF2.PdfFileMerger()
 
     for path in self.listbox.get(0, tk.END):
-      merge_file.append(PyPDF2.PdfFileReader(self.directory + path, 'rb'))
+      pdf_reader = PyPDF2.PdfFileReader(self.directory + path, 'rb')      
+      merge_file.append(pdf_reader)
 
     output_path = fd.asksaveasfilename(filetypes=self.filetypes)
     
