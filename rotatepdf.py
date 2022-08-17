@@ -1,7 +1,7 @@
 import PyPDF2
 
-PATH = '/home/mervan.yalcindag@bik.ilan/Downloads/kemalpaşa/'
-pdfIn = open(PATH + 'çıktı.pdf', 'rb') # exchange the 'original.pdf' with a name of your file 
+PATH = r'/home/mervan.yalcindag@bik.ilan/Downloads/artvin haber kkr/'
+pdfIn = open(PATH + '3.pdf', 'rb') # exchange the 'original.pdf' with a name of your file 
 pdfReader = PyPDF2.PdfFileReader(pdfIn)
 pdfWriter = PyPDF2.PdfFileWriter()
 
